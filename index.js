@@ -1,14 +1,9 @@
 const User = require('./db');
 
-const findData = async()=>{
-  let result = await User.findOne({name:"Rushikesh Tekale"});
-  console.log(result);
-}
-
 const findManyData = async()=>{
-  let result = await User.find({rollno : {$gt:2}});
+  // limit(2) specify how much document to be return
+  let result = await User.find({}).limit(1);
   console.log(result);
 }
 
-findData();
 findManyData();
