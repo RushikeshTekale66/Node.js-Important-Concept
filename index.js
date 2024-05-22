@@ -1,8 +1,9 @@
 const User = require('./db');
 
 const findManyData = async()=>{
-  // limit(2) specify how much document to be return
-  let result = await User.find({}).limit(1);
+  // sort the result in ascending or descending order.
+  // for ascending order use 1 & for descending order use -1
+  let result = await User.find({}).sort({name:-1}); 
   console.log(result);
 }
 
