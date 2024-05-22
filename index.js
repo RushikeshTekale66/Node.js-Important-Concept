@@ -1,19 +1,17 @@
-const User = require('./db');
+const mongoose = require('mongoose');
 
-const updatedata = async()=>{
-  // Update first occurance of the document
-  let result = await User.updateOne(
-    {rollno:1}, //filter
-    {rollno:10} //update
-  )
-  console.log(result);
+// db can access the database which is connected
+const db = mongoose.connection;
 
-  // Update many document
-  let result2 = await User.updateMany(
-    {rollno:10}, //filter
-    {$set : {name:"Rushi Tekale", rollno:100}} //update
-  )
-  console.log(result2);
+const dropCollectionDoc = async()=>{
+  try{
+    // drop the collection "infos"
+    await db.dropCollection("infos");
+    console.log("Collection deleted successfully");
+  }
+  catch(e){
+    console.log("Error on droping ", e);
+  }
 }
 
-updatedata();
+dropCollectionDoc();
