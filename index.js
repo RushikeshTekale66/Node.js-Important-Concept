@@ -1,10 +1,10 @@
 const User = require('./db');
 
-const findManyData = async()=>{
-  // sort the result in ascending or descending order.
-  // for ascending order use 1 & for descending order use -1
-  let result = await User.find({}).sort({name:-1}); 
+const deletedata = async()=>{
+  let result = await User.deleteOne({rollno:{$gt:2}});
+  let result2 = await User.deleteMany({rollno:{$gt:2}});
   console.log(result);
+  console.log(result2);
 }
 
-findManyData();
+deletedata();
