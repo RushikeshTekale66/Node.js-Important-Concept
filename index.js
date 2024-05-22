@@ -1,10 +1,19 @@
 const User = require('./db');
 
-const deletedata = async()=>{
-  let result = await User.deleteOne({rollno:{$gt:2}});
-  let result2 = await User.deleteMany({rollno:{$gt:2}});
+const updatedata = async()=>{
+  // Update first occurance of the document
+  let result = await User.updateOne(
+    {rollno:1}, //filter
+    {rollno:10} //update
+  )
   console.log(result);
+
+  // Update many document
+  let result2 = await User.updateMany(
+    {rollno:10}, //filter
+    {$set : {name:"Rushi Tekale", rollno:100}} //update
+  )
   console.log(result2);
 }
 
-deletedata();
+updatedata();
