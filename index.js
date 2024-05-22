@@ -1,14 +1,44 @@
-const mongoose = require('mongoose');
-// Database URL
-const url = "mongodb://127.0.0.1:27017/PracticeMongoDB";
+const User = require('./db');
 
-// Connect Node.js to database
-mongoose.connect(url).then(()=>console.log("Connected to database")).catch((e)=>console.log("Error occure",e))
+// Insert single data in database
+const insertData = async () => {
+  const user = new User({
+    name: "Vaibhav Tambare",
+    rollno: "1"
+  })
 
-const newSchema = new mongoose.Schema({
-  name:String,
-  rollno:Number
-})
+  try{
+    const saveUser = await user.save();
+    console.log("User saved", saveUser);
+  }
+  catch(e){
+    console.log("Error on saving", e);
+  }
+}
 
-// create collection named infos
-const newModel = mongoose.model("info", newSchema);
+// Insert multiple data in database
+
+const insertManyData = async()=>{
+  const users = [
+    {
+      name:"Adinath Tekale",
+      rollno:2
+    },
+    {
+      name:"Rushikesh Tekale",
+      rollno:3
+    }
+  ]
+
+  try{
+    const saveUsers = await User.insertMany(users);
+    console.log("Saved All user", saveUsers);
+  }
+  catch(e){
+    console.log("Error while saving data ", e);
+  }
+}
+
+// Insert One Data in database 
+insertData();
+insertManyData();
