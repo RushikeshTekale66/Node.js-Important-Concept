@@ -1,0 +1,19 @@
+{
+  "name": "node.js-important-concept",
+  "version": "1.0.0",
+  "description": "Node Important concept",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RushikeshTekale66/Node.js-Important-Concept.git"
+  },
+  "author": "Rushikesh Tekale",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RushikeshTekale66/Node.js-Important-Concept/issues"
+  },
+  "homepage": "https://github.com/RushikeshTekale66/Node.js-Important-Concept#readme"
+}
