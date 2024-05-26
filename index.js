@@ -1,30 +1,13 @@
-const http = require('http');
-const fs = require('fs');
+const url = require('url');
 
-// single page http server
-/*
-const server = http.createServer((req, res)=>{
-  console.log("Server is live");
-  res.end("Responce send by the server")
-})
-*/
+const address = "https://www.w3schools.com/nodejs/shownodejs.asp?filename=demo_querystring_summer";
 
-// Multipage server
-const server = http.createServer((req, res) => {
-  // Created a log that can save the information about date & url ie req send by the user on that url
-  const log = `${Date.now()} : ${req. url} New Req Received \n`;
-  fs.appendFile("log.txt", log, (err, data) => {
-    switch (req.url) {
-      case ("/"):
-        res.end("Homepage");
-        break;
-      case ("/about"):
-        res.end("About");
-        break;
-      default:
-        res.end("404 Not found");
-    }
-  })
-})
+const myUrl = url.parse(address, true);
 
-server.listen(8000, ()=>console.log("Server started"));
+console.log(myUrl.href);
+console.log(myUrl.hostname);
+console.log(myUrl.port);
+console.log(myUrl.search);
+console.log(myUrl.pathname);
+console.log(myUrl.query);
+console.log(myUrl.query.filename);
