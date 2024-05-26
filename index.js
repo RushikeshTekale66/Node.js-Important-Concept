@@ -1,7 +1,16 @@
-/*
-1) GET : GET method is to simply retrieve data from the server
-2) POST : POST HTTP request method sends data to the server for processing.
-3) PUT : PUT method is used to completely replace a resource identified with a given URL.
-4) DELETE : After execution, the resource a DELETE operation points to is removed from the server.
-5) PATCH : update some part in the resources
-*/
+const express = require('express');
+const app = express();
+
+app.get("/", (req, res)=>{
+  res.send("I am home page");
+})
+
+app.get("/about", (req, res)=>{
+  res.send("<h1>I am about page</h1>")
+})
+
+app.get("/contact", (req, res)=>{
+  res.send("I am contact");
+})
+
+app.listen(8000, ()=>{console.log("Server is live");})
