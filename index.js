@@ -1,16 +1,29 @@
 const express = require('express');
+const users = require('./MOCK_DATA.json');
+
 const app = express();
+const port = 5000;
 
-app.get("/", (req, res)=>{
-  res.send("I am home page");
+// html data rendaring  (HTML document rendaring)
+app.get("/users", (req, res) => {
+  const html = `
+  <ul>
+  ${users.map((user) => `<li>${user.first_name}</li>`)}
+  </ul>
+  `;
+  res.send(html);
 })
 
-app.get("/about", (req, res)=>{
-  res.send("<h1>I am about page</h1>")
+// Get all data from user as a json
+app.get(('/api/users'), (req, res) => {
+  return res.json(users);
 })
 
-app.get("/contact", (req, res)=>{
-  res.send("I am contact");
+// Get data as per id which is provided
+app.get("/api/users/:id", (req, res)=>{
+  const id = Number(req.params.id);
+  const user = users.find((user)=>user.id===id);
+  res.json(user);
 })
 
-app.listen(8000, ()=>{console.log("Server is live");})
+app.listen(port, () => { console.log(`App is live on ${port}`); })
