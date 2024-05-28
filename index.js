@@ -7,7 +7,8 @@ app.get("/getuser", (req, res)=>{
   // setting header
   res.setHeader("myName", "Rushikeshtekale")
   let result = User;
-  res.json(result);
+  // Setting the http status code to che the responce of request
+  res.status(200).json(result);
 })
 
 app.listen(5000, ()=>{console.log("App is live");})
