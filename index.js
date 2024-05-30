@@ -1,17 +1,34 @@
 const express = require("express");
-const {connectMongoDb} = require("./connection");
-// Connect with mongodb
-connectMongoDb("mongodb://127.0.0.1:27017/NodePractice")
+const { connectMongoDb } = require("./connection");
+const urlRoute = require("./routes/url");
+const URL = require("./models/urls");
 
-const userRouter = require("./routes/user")
-
-const port = 5000;
 const app = express();
+const PORT = 8001;
 
-// middlewhere
-app.use(express.urlencoded());
+connectMongoDb("mongodb://127.0.0.1:27017/short-url").then(() =>
+  console.log("Mongodb connected")
+);
 
-// Routes
-app.use('/api/user', userRouter);
+app.use(express.json());
 
-app.listen(port, (() => { console.log("Application is running on port ", port); }))
+app.use("/url", urlRoute);
+
+app.get("/:shortId", async (req, res) => {
+  const shortId = req.params.shortId;
+  const entry = await URL.findOneAndUpdate(
+    {
+      shortId,
+    },
+    {
+      $push: {
+        visitHistory: {
+          timestamp: Date.now(),
+        },
+      },
+    }
+  );
+  res.redirect(entry.redirectURL);
+});
+
+app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));

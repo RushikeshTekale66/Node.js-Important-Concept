@@ -19,6 +19,7 @@
   "homepage": "https://github.com/RushikeshTekale66/Node.js-Important-Concept#readme",
   "dependencies": {
     "express": "^4.19.2",
-    "mongoose": "^8.4.0"
+    "mongoose": "^8.4.0",
+    "shortid": "^2.2.16"
   }
 }
