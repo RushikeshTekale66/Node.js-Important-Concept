@@ -5,6 +5,8 @@ const staticRoute  = require("./routes/staticRouter");
 const URL = require("./models/urls");
 const path = require("path")
 
+// Project URL shorter Frontend with ejs & backend Node.js, express, mongodb
+
 const app = express();
 const PORT = 8001;
 
