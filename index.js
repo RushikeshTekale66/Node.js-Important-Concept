@@ -5,6 +5,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const {restrictTo, checkForAuthentication} = require("./middlewares/auth");
 
+
 // Routes
 const urlRoute = require("./routes/url");
 const staticRoute  = require("./routes/staticRouter");
