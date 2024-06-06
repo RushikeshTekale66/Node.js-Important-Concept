@@ -1,50 +1,43 @@
-const express = require("express");
-const { connectMongoDb } = require("./connection");
-const URL = require("./models/urls");
 const path = require("path");
-const cookieParser = require("cookie-parser");
-const {restrictTo, checkForAuthentication} = require("./middlewares/auth");
-
-
-// Routes
-const urlRoute = require("./routes/url");
-const staticRoute  = require("./routes/staticRouter");
-const userRoute = require("./routes/user");
+const express = require("express");
+const multer = require("multer");
 
 const app = express();
-const PORT = 8001;
+const port = 8000;
 
-connectMongoDb("mongodb://127.0.0.1:27017/short-url");
+const storage = multer.diskStorage({
+  destination: function(req, file, callBack){
+    // save the file to /uploads
+    return callBack(null, "./uploads");
+  },
+  filename: function(req, file, callBack){
+    // file name : date+filename
+    return callBack(null, `${Date.now()}-${file.originalname}`);
+  }
+})
 
-app.use(express.json());
-app.use(express.urlencoded({extended:false}));
-// Used to parse the cookie data
-app.use(cookieParser());
-app.use(checkForAuthentication);
+// file in upload
+const upload = multer({storage});
 
-// for serverside rendaring we use ejs template engine
+// Middle where
+app.use(express.json()); //parse json
+app.use(express.urlencoded({extended:false})) //handle the form data
+
+// setting view engine
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
-app.use("/url", restrictTo(["NORMAL", "ADMIN"]), urlRoute);
-app.use("/", staticRoute);
-app.use("/user", userRoute);
 
-app.get("/url/:shortId", async (req, res) => {
-  const shortId = req.params.shortId;
-  const entry = await URL.findOneAndUpdate(
-    {
-      shortId,
-    },
-    {
-      $push: {
-        visitHistory: {
-          timestamp: Date.now(),
-        },
-      },
-    }
-  );
-  res.redirect(entry.redirectURL);
-});
+app.get("/", (req, res)=>{
+  return res.render("homepage");
+})
 
-app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));
+
+app.post("/upload", upload.single("profileImage"), (req, res)=>{
+  console.log(req.body);
+  console.log(req.file);
+
+  return res.redirect("/");
+})
+
+app.listen(port, ()=>console.log("Server is live"));
