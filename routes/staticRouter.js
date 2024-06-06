@@ -1,10 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const URL = require("../models/urls")
+const URL = require("../models/urls");
+const { restrictTo } = require('../middlewares/auth');
 
-// it can display the all the operation that we perform on home page
-router.get("/", async(req, res)=>{
-    if(!req.user) return res.redirect("/login");
+
+// Display all the urls (Admin Access)
+router.get("/admin/urls", restrictTo(["ADMIN"]), async(req, res)=>{
+    const allUrls = await URL.find({});
+    return res.render("home",{
+        urls:allUrls
+    })
+})
+
+// Display the url created by the user only
+router.get("/", restrictTo(["NORMAL", "ADMIN"]), async(req, res)=>{
     const allUrls = await URL.find({createdBy: req.user._id});
     return res.render("home",{
         urls:allUrls

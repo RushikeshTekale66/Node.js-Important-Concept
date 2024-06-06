@@ -3,7 +3,7 @@ const { connectMongoDb } = require("./connection");
 const URL = require("./models/urls");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const {restrictToLoggedinUserOnly, checkAuth} = require("./middlewares/auth");
+const {restrictTo, checkForAuthentication} = require("./middlewares/auth");
 
 // Routes
 const urlRoute = require("./routes/url");
@@ -19,13 +19,14 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 // Used to parse the cookie data
 app.use(cookieParser());
+app.use(checkForAuthentication);
 
 // for serverside rendaring we use ejs template engine
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
-app.use("/url", restrictToLoggedinUserOnly, urlRoute);
-app.use("/", checkAuth, staticRoute);
+app.use("/url", restrictTo(["NORMAL", "ADMIN"]), urlRoute);
+app.use("/", staticRoute);
 app.use("/user", userRoute);
 
 app.get("/url/:shortId", async (req, res) => {
