@@ -1,43 +1,23 @@
-const path = require("path");
 const express = require("express");
-const multer = require("multer");
+const fs = require("fs");
+const status = require("express-status-monitor");
+// creating the zip file
+const zlib = require("zlib");
 
 const app = express();
-const port = 8000;
+const port = 5000;
 
-const storage = multer.diskStorage({
-  destination: function(req, file, callBack){
-    // save the file to /uploads
-    return callBack(null, "./uploads");
-  },
-  filename: function(req, file, callBack){
-    // file name : date+filename
-    return callBack(null, `${Date.now()}-${file.originalname}`);
-  }
-})
+app.use(status());
 
-// file in upload
-const upload = multer({storage});
-
-// Middle where
-app.use(express.json()); //parse json
-app.use(express.urlencoded({extended:false})) //handle the form data
-
-// setting view engine
-app.set("view engine", "ejs");
-app.set("views", path.resolve("./views"));
+// reading stream (text.txt) --> making the zip file of it --> writing the zip into stream
+fs.createReadStream("./text.txt").pipe(zlib.createGzip().pipe(fs.createWriteStream("./text.zip")));
 
 
 app.get("/", (req, res)=>{
-  return res.render("homepage");
+  const stream = fs.createReadStream("./text.txt", "utf-8");
+  stream.on('data', (chunk)=>res.write(chunk));
+  // end the responce after reading the data
+  stream.on('end', ()=>res.end());
 })
 
-
-app.post("/upload", upload.single("profileImage"), (req, res)=>{
-  console.log(req.body);
-  console.log(req.file);
-
-  return res.redirect("/");
-})
-
-app.listen(port, ()=>console.log("Server is live"));
+app.listen(port, ()=>console.log("Application is live on ", port))
