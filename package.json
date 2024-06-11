@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/RushikeshTekale66/Node.js-Important-Concept#readme",
   "dependencies": {
-    "express": "^4.19.2",
-    "express-status-monitor": "^1.3.4"
+    "express": "^4.19.2"
   }
 }
