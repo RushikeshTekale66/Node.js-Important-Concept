@@ -1,22 +1,30 @@
 const express = require("express");
-const cluster = require("cluster");
-const os = require("os");
+const app = express();
+const port = 5000;
 
-// Count to cpus
-const totalCPUs = os.cpus().length;
-
-if(cluster.isPrimary){
-    for(let i=0; i<totalCPUs; i++){
-        // Distribute the load to all the clusters
-        cluster.fork();
+//Middle ware
+const middle = (req, res, next)=>{
+    // If route contains login the go further
+    if(req.query.login){
+        console.log(req.query);
+        next();
     }
-}else{
-    const app = express();
-    const port = 5000;
-
-    app.get("/", (req, res)=>{
-        return res.json({msg:`Hellow from exress server ${process.pid}`})
-    })
-
-    app.listen(port, ()=>console.log("Application is running on ", port));
+    //else print error
+    else{
+        res.send("<h1>You are not login</h1>");
+    }    
 }
+
+//Middleware using in app
+app.use(middle);
+
+
+//route level middleware
+app.get("/", middle, (req, res)=>{
+    res.send("<h1>Hi I am Home page");
+})
+
+app.listen(port, ()=>{
+    console.log("Application is running on port", port);
+    
+})
