@@ -1,10 +1,6 @@
-const express = require("express");
-const app = express();
-const port = 5000;
+const http = require("http");
 
-app.get("/", (req, res)=>{
-    res.status(200).send("All ok")
-})
-
-app.listen(port, ()=>console.log("Application is live")
-);
+http.createServer(function(req, res){
+    res.writeHead(200, {'content-type':'text/plain'});
+    res.end("Hellow world");
+}).listen(3000);
