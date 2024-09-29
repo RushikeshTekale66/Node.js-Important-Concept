@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/RushikeshTekale66/Node.js-Important-Concept/issues"
   },
-  "homepage": "https://github.com/RushikeshTekale66/Node.js-Important-Concept#readme"
+  "homepage": "https://github.com/RushikeshTekale66/Node.js-Important-Concept#readme",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  }
 }

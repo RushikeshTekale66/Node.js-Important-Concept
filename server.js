@@ -1,6 +1,15 @@
-const http = require("http");
+const jwt = require("jsonwebtoken");
 
-http.createServer(function(req, res){
-    res.writeHead(200, {'content-type':'text/plain'});
-    res.end("Hellow world");
-}).listen(3000);
+// Secret key for jwt
+const secretkey = "Rushikesh";
+
+//Data for jwt
+let user= {
+    name:"Rushikesh",
+    lname:"Tekale"
+}
+
+// Creating the jwt token
+const token = jwt.sign(user, secretkey);
+
+console.log(token);
