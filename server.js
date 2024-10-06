@@ -1,13 +1,29 @@
 console.log("Print First");
 
-setInterval(()=>{
-    console.log("Functions 1 is running");
+let Immid = setImmediate(()=>{
+    console.log("Set Immediate");
     
-}, 2000)
+});
 
-let timerId = setInterval(()=>{
-    console.log("Function 2 is running");
+console.log("Second");
+
+
+// clearImmediate(Immid);
+
+let TimeId = setTimeout(()=>{
+    console.log("SetTimeout");
     
-}, 1000);
+}, 1000)
 
-clearInterval(timerId);
+console.log("Third");
+
+// clearTimeout(TimeId);
+
+let InterId = setInterval(()=>{
+    console.log("Set Interval");
+    
+}, 1000)
+
+console.log("Fourth");
+
+// clearInterval(InterId);
