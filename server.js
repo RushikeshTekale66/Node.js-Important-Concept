@@ -1,15 +1,21 @@
-const jwt = require("jsonwebtoken");
+console.log("Print Immediate");
 
-// Secret key for jwt
-const secretkey = "Rushikesh";
+//Schedule a function that run after specific delay
+setTimeout(()=>{
+    console.log("Print after 2 sec");
+    
+}, 2000)
 
-//Data for jwt
-let user= {
-    name:"Rushikesh",
-    lname:"Tekale"
+setTimeout(Fun1, 4000);
+function Fun1(){
+    console.log("Print after 4 sec");
+    
 }
 
-// Creating the jwt token
-const token = jwt.sign(user, secretkey);
+// We can also pass argument to it
+function fun2(name, age){
+    console.log("Data after 5 sec is ");    
+    console.log("My name is : ", name , " My age is : ", age);
+}
 
-console.log(token);
+setTimeout(fun2, 5000, "Rushikesh", 23);
