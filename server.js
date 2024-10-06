@@ -1,21 +1,13 @@
-console.log("Print Immediate");
+console.log("Print First");
 
-//Schedule a function that run after specific delay
-setTimeout(()=>{
-    console.log("Print after 2 sec");
+setInterval(()=>{
+    console.log("Functions 1 is running");
     
 }, 2000)
 
-setTimeout(Fun1, 4000);
-function Fun1(){
-    console.log("Print after 4 sec");
+let timerId = setInterval(()=>{
+    console.log("Function 2 is running");
     
-}
+}, 1000);
 
-// We can also pass argument to it
-function fun2(name, age){
-    console.log("Data after 5 sec is ");    
-    console.log("My name is : ", name , " My age is : ", age);
-}
-
-setTimeout(fun2, 5000, "Rushikesh", 23);
+clearInterval(timerId);
