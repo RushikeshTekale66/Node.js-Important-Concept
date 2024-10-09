@@ -1,29 +1,10 @@
-console.log("Print First");
+let fs = require("fs");
 
-let Immid = setImmediate(()=>{
-    console.log("Set Immediate");
-    
-});
+// Read file synchronously
+console.log("Task 1");
 
-console.log("Second");
+let result = fs.readFileSync("./package.json", 'utf-8');
+console.log(result);
 
+console.log("Task 2");
 
-// clearImmediate(Immid);
-
-let TimeId = setTimeout(()=>{
-    console.log("SetTimeout");
-    
-}, 1000)
-
-console.log("Third");
-
-// clearTimeout(TimeId);
-
-let InterId = setInterval(()=>{
-    console.log("Set Interval");
-    
-}, 1000)
-
-console.log("Fourth");
-
-// clearInterval(InterId);
