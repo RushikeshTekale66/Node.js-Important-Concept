@@ -1,14 +1,12 @@
-let fs = require("fs");
+let os = require("os");
 
-// Read file synchronously
-console.log("Task 1");
+console.log("Total CPUs", os.cpus().length);
+console.log("Current Platform is : ", os.platform());
+console.log("Architecture is : ", os.arch());
+console.log("Type of os ", os.type());
+console.log("Current user name of os : ", os.userInfo().username);
 
-fs.readFile("package.json", 'utf-8', (error, result)=>{
-    if(error) console.log("Got error : ", error);
-    else console.log(result);
-    
-    
-})
 
-console.log("Task 2");
+
+
 
