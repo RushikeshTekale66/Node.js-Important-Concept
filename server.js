@@ -12,11 +12,11 @@ app.get("/", (req, res)=>{
     // Reagular file reading
 
     // let data = fs.readFileSync("text.txt", "utf-8");  //Regular file reading
-    // res.send(data);
+    // res.write(data);
 
     // File reading through stream
     const stream = fs.createReadStream("text.txt", "utf-8");
-    stream.on("data", (chunk)=>res.send(chunk));
+    stream.on("data", (chunk)=>res.write(chunk));
     stream.on("end", ()=>res.end());   
 })
 
